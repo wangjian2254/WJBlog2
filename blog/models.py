@@ -3,6 +3,8 @@ from django.db import models
 from django.contrib.auth.models import User
 
 # Create your models here.
+from WJBlog2.settings import MEDIA_URL
+
 
 class BlogUser(models.Model):
     user=models.ForeignKey(User)
@@ -201,13 +203,13 @@ class PaperImage(models.Model):
         return self.title.title
 
     def getImgUrl(self,site):
-        return '/static/upload/%s/%s'%(site,self.img)
+        return '%supload/%s/%s'%(MEDIA_URL,site,self.img)
 
     def getImgUrlsmall(self,site):
-        return '/static/upload/%s/%s'%(site,self.imgsmall)
+        return '%supload/%s/%s'%(MEDIA_URL,site,self.imgsmall)
 
     def getImgUrlmid(self,site):
-        return '/static/upload/%s/%s'%(site,self.imgmid)
+        return '%supload/%s/%s'%(MEDIA_URL,site,self.imgmid)
 
 class Replay(models.Model):
     title=models.ForeignKey(Title,verbose_name=u'隶属文章')
