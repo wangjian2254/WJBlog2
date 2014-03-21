@@ -1,0 +1,50 @@
+{% extends "default2/base.html" %}
+{% block title %}<title>{{titlename}}-{{ webinfo.webname }}</title>{% endblock %}
+{% block left %}
+{% include 'default2/include/left.html' %}
+{% endblock %}
+{% block menu %}
+{% include 'default2/include/menu.html' %}
+{% endblock %}
+{% block paper %}
+<div class="line_desc">
+    <a href='/' title='{{webinfo.webname}}'>首页</a> >> {%if menu%}{{ menu.name }}{%endif%}{% if keyword %}关键字:{{ keyword.name }}{%endif%}
+</div>
+{% for paper in paperlist %}
+<div  class="line_desc" style="height: 25px;" onmouseout="this.style.backgroundColor='white';" onmouseover="this.style.backgroundColor='#d9ffd9';">
+    <span class="fleft">{{ forloop.counter|add:offset}}.
+	</span>
+    <span class="fleft"><a href='/blog/paper/{{ paper.menu_id }}/{{ paper.id }}.html' target="_blank">{{ paper.title }}</a>
+	</span>
+    <span class="fright"><a href='/blog/paper/{{ paper.menu_id }}/{{ paper.id }}.html' target="_blank">{{ paper.releaseDate|date:"Y年m月d日 H时i分"}}</a>
+    </span>
+
+</div>
+{% endfor %}
+    <div  class="line_desc">
+        {%if menu%}
+            <a href='/blog/{{ menu.id }}.html?offset=0'>第一页</a>&nbsp;&nbsp;&nbsp;
+            {% for page in pagelist %}
+                {% ifequal page.offset offset %}
+                    {{ page.page }}&nbsp;&nbsp;&nbsp;
+                {% else %}
+                    <a href='/blog/{{ menu.id }}.html?offset={{ page.offset }}' >{{ page.page }}</a>&nbsp;&nbsp;&nbsp;
+                {% endifequal %}
+
+            {% endfor %}
+                <a href='/blog/{{ menu.id }}.html?offset={{ lastpage }}'>最后一页</a>&nbsp;&nbsp;&nbsp;
+        {%endif%}
+        {% if keyword %}
+            <a href='/blog/keywords?keyword={{ keyword.id }}&offset=0'>第一页</a>&nbsp;&nbsp;&nbsp;
+            {% for page in pagelist %}
+                {% ifequal page.offset offset %}
+                    {{ page.page }}&nbsp;&nbsp;&nbsp;
+                {% else %}
+                    <a href='/blog/keywords?keyword={{ keyword.id }}&offset={{ page.offset }}'>{{ page.page }}</a>&nbsp;&nbsp;&nbsp;
+                {% endifequal %}
+
+            {% endfor %}
+                <a href='/blog/keywords?keyword={{ keyword.id }}&offset={{ lastpage }}'>最后一页</a>&nbsp;&nbsp;&nbsp;
+        {%endif%}
+    </div>
+{% endblock %}
